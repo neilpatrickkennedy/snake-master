@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Master</title>
+    
+  </head>
+  <body>
+  
+      <div class="wrapper">
+
+        <!-- score board -->
+        <div class="score-board">
+          <div class="score">Score: 0</div>
+          <div class="bonus"></div>
+          <div class="high-score">High Score: 0</div>
+        </div>
+
+        <!-- game board -->
+        <div class="game-board"></div>
+
+        <!-- controls -->
+        <div class="controls">
+          <div class="btn control refresh">&#8634;</div>
+          <div class="btn control arrow-up">&#9206;</div>
+          <div class="btn control arrow-left">&#9204;</div>
+          <div class="btn control pause">&#x23EF;</div>
+          <div class="btn control arrow-right">&#9205;</div>
+          <div class="btn control arrow-down">&#9207;</div>
+          <div class="level"></div>
+          <div class="sound"></div>
+        </div>  
+        
+      </div>  <!-- end wrapper -->
+
+      <!-- modal -->
+      <div class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn" data-dismiss="modal">PLAY</button>
+            </div>
+          </div>
+        </div>
+      </div>  <!-- end modal -->
+  </body>
+</html>

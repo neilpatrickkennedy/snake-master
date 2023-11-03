@@ -1,0 +1,390 @@
+@font-face {
+  font-family: Electrolize-Regular;
+  src: url(Electrolize-Regular.ttf);
+}
+
+:root {
+    --grid-dim: 30;
+    --top-bottom-background-color: #293447;
+    --grid-background-color: #212837;
+    --font-white: #B8C6DC;
+    --font-red: red;
+    --font-green: #4AF626;
+    --snake-green: #288d0f;
+    --modal-purple: rgb(189, 28, 189);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Electrolize-Regular', sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #E3F2FD;
+}
+
+.wrapper {
+  height: 100vh;
+  aspect-ratio: 3 / 4;
+  font-size: 1rem;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  background: var(--background-color);
+  box-shadow: 0 20px 40px rgba(52, 87, 220, 0.2);
+}
+
+.modal .modal-dialog .modal-content {
+  background-color: var(--modal-purple);
+  color: black;
+  position: absolute;
+  width: 75%;
+  left: 12.5%;
+}
+
+.modal .modal-dialog .modal-content .modal-header{
+  justify-content: center !important
+}
+
+.modal .modal-dialog .modal-content .modal-title{
+  display: flex;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-shadow: 2px 2px var(--font-green);
+}
+
+.modal .modal-dialog .modal-content .modal-body{
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.modal .modal-dialog .modal-content .modal-footer .btn {
+  width: 100px;
+}
+
+.modal .modal-dialog .modal-content .modal-body li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 0.5%;
+}
+
+.modal .modal-dialog .modal-content .modal-body li img {
+  width: 70px;
+  margin-right: 0.5%;
+}
+
+@keyframes levelUp {
+  0% {scale: 1;}
+  50% {scale: 1.4;}
+  100% {opacity: 1;}
+}
+
+.score-board {
+  width: 100%;
+  height: 7.5%;
+  background-color: var(--top-bottom-background-color);
+  color: var(--font-green);
+  font-weight: 500;
+  font-size: 1.2rem;
+  padding: 20px 27px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.score-board .bonus {
+  animation-name: bonusAppear;
+  animation-fill-mode: forwards;
+  animation-duration: 4s;
+}
+
+@keyframes bonusAppear {
+  0% { scale: 1; color: rgb(255, 0, 0, 0.1); }
+  25% { scale: 1.1; color: rgb(255, 0, 0, 0.75); }
+  50% { scale: 1; color: rgb(255, 0, 0, 1); }
+  100% { scale: 1; color: rgb(255, 0, 0, 0); }
+}
+
+.score-board .high-score-new {
+  animation-name: highScore;
+  animation-fill-mode: forwards;
+  animation-duration: 2s;
+}
+
+@keyframes highScore {
+  0% { scale: 1; color: var(--font-green); }
+  25% { scale: 1.1; color: var(--font-red); }
+  50% { scale: 1; color: var(--font-green); }
+  100% { scale: 1; color: var(--font-green); }
+}
+
+.game-board {
+  height: 75%;
+  width: 100%;
+  display: grid;
+  background: var(--grid-background-color);
+  grid-template: repeat(var(--grid-dim), 1fr) / repeat(var(--grid-dim), 1fr);
+}
+
+.game-board .target {
+  background: #FF003D;
+  border: solid;
+  border-width: 3px;
+  border-color: grey;
+  border-radius: 25%;
+  background: red;
+  animation-name: targetAppears;
+  animation-duration: 0.8s; 
+  animation-fill-mode: forwards;
+}
+
+.game-board .target-new {
+    animation-name: targetNew;
+    animation-duration: 0.8s; 
+    animation-fill-mode: forwards;
+    /* z-index: 20; */
+}
+
+@keyframes targetNew {
+    0% { scale: 1; }
+    50% { scale: 1.2; }
+    100% { scale: 1; }
+}
+
+.game-board .target-hit {
+  animation-name: targetHit;
+  animation-duration: 0.8s; 
+  animation-fill-mode: forwards;
+}
+
+@keyframes targetHit {
+  0% { scale: 1; }
+  20% { scale: 1.50; }
+  40% { scale: 1; }
+  100% { scale: 0; }
+}
+
+.game-board .snake {
+  background: var(--font-green);
+  border: solid;
+  border-radius: 40%;
+  border-color: yellow;
+  border-width: 2px;
+  scale: 0.8;
+  z-index: 20;
+}
+
+.game-board .snake-remove {
+  animation-name: snakeRemove;
+  animation-duration: 0.8s; 
+  animation-fill-mode: forwards;
+  z-index: 20;
+}
+
+@keyframes snakeRemove {
+  0% { scale: 1; }
+  20% { scale: 1.50; }
+  40% { scale: 1; }
+  100% { scale: 0; }
+}
+
+.game-board .snake-new {
+  animation-name: snakeNew;
+  animation-duration: 0.8s; 
+  animation-fill-mode: forwards;
+  z-index: 20;
+}
+
+@keyframes snakeNew {
+  0% { scale: 0.2; }
+  80% { scale: 1.2; }
+  100% { scale: 1; }
+}
+
+.game-board .snake-collision {
+  animation-name: snakeCollision;
+  animation-duration: 2s; 
+  animation-iteration-count: infinite;
+}
+
+@keyframes snakeCollision {
+  0% { scale: 1; }
+  50% { scale: 2; }
+  100% { scale: 1; }
+}
+
+.game-board .snakehead-wall {
+  animation-name: snakeheadWall;
+  animation-duration: 1s; 
+  animation-fill-mode: forwards;
+}
+
+@keyframes snakeheadWall {
+  0% { scale: 1; }
+  50% { scale: 2; }
+  100% { scale: 1; }
+}
+
+.game-board .snake-wall-up {
+  animation-name: snakeWallUp;
+  animation-duration: 1s; 
+  animation-fill-mode: forwards;
+}
+
+@keyframes snakeWallUp {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(4px); }
+  30% { transform: translateY(-8px); }
+  40% { transform: translateY(4px); }
+  60% { transform: translateY(-4px); }
+  100% { transform: translateY(0px); }
+}
+
+.game-board .snake-wall-right {
+  animation-name: snakeWallRight;
+  animation-duration: 1s; 
+  animation-fill-mode: forwards;
+}
+
+@keyframes snakeWallRight {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(4px); }
+  30% { transform: translateX(-8px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  100% { transform: translateX(0px); }
+}
+
+.game-board .snake-wall-down {
+  animation-name: snakeWallDown;
+  animation-duration: 1s; 
+  animation-fill-mode: forwards;
+}
+
+@keyframes snakeWallDown {
+  0% { transform: translateX(0); }
+  20% { transform: translateY(-4px); }
+  30% { transform: translateY(8px); }
+  40% { transform: translateY(-4px); }
+  60% { transform: translateY(4px); }
+  100% { transform: translateY(0px); }
+}
+
+.game-board .snake-wall-left {
+  animation-name: snakeWallLeft;
+  animation-duration: 1s; 
+  animation-fill-mode: forwards;
+}
+
+@keyframes snakeWallLeft {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  30% { transform: translateX(8px); }
+  40% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  100% { transform: translateX(0px); }
+}
+
+.controls {
+  height: 17.5%;
+  width: 100%;
+  display: grid;
+  background: var(--top-bottom-background-color);
+  grid-template: repeat(3, 1fr) / repeat(5, 1fr);
+}
+
+.control {
+  color: var(--font-white) !important;
+  font-weight: 800;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 1.25em !important;
+  padding: 0 0 !important;
+}
+
+.control.refresh {
+  grid-area: 1 / 1;
+}
+
+.control.arrow-up {
+  grid-area: 1 / 3;
+}
+
+.control.arrow-left {
+  grid-area: 2 / 2;
+}
+
+.control.pause {
+  grid-area: 2 / 3;
+}
+
+.control.pause-active {
+  grid-area: 2 / 3;
+  animation-name: pauseActive;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pauseActive {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.control.arrow-right {
+  grid-area: 2 / 4;
+}
+
+.control.arrow-down {
+  grid-area: 3 / 3;
+}
+
+.btn:hover {
+  color: var(--top-bottom-background-color) !important;
+  background-color: var(--font-white) !important;
+}
+
+.controls .level {
+  font-size: 1.2em;
+  color: var(--font-green);
+  grid-row: 1;
+  grid-column: 5;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.controls .level-up {
+  animation-name: levelUp;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+
+/* @media screen and (max-width: 800px) {
+  .wrapper {
+    width: 90vmin;
+    height: 115vmin;
+  }
+  .game-details {
+    font-size: 1rem;
+    padding: 15px 27px;
+  }
+  .controls {
+    display: flex;
+  }
+  .controls input {
+    padding: 15px 0;
+    font-size: 1rem;
+  }
+} */
